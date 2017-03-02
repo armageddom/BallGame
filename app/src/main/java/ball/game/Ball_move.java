@@ -1,19 +1,24 @@
 package ball.game;
 
+import android.app.Dialog;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.Paint;
+import android.graphics.Path;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
+import android.widget.TextView;
 
 /**
  * Created by jere on 2.3.2017.
@@ -26,11 +31,15 @@ public class Ball_move extends AppCompatActivity implements SensorEventListener 
     float startX = 400;
     float startY = 400;
     float x , y , sensorX , sensorY ;
+    Paint paint;
+    Path path;
+
+
 
     @Override
     public void onSensorChanged(SensorEvent event) {
         try {
-            Thread.sleep(40);
+            Thread.sleep(50);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
@@ -53,10 +62,13 @@ public class Ball_move extends AppCompatActivity implements SensorEventListener 
         boolean isRunning = true;
 
 
+
         public Ball_view(Context context) {
 
             super(context);
             ourHolder = getHolder();
+            init();
+
 
         }
 
@@ -90,10 +102,12 @@ public class Ball_move extends AppCompatActivity implements SensorEventListener 
                 Canvas canvas = ourHolder.lockCanvas();
                 canvas.drawColor(Color.CYAN);
                 canvas.drawBitmap(Ball,startX+sensorY*120,startY+sensorX*120,null);
+                canvas.drawRect(300, 300, 100, 100, paint);
                 ourHolder.unlockCanvasAndPost(canvas);
             }
         }
     }
+
     String TAG;
     @Override
     protected void onCreate( Bundle savedInstanceState) {
@@ -104,13 +118,24 @@ public class Ball_move extends AppCompatActivity implements SensorEventListener 
             Sensors.registerListener(this,s,SensorManager.SENSOR_DELAY_NORMAL);
             Log.e(TAG, "pääse ");
         }
-        Ball = BitmapFactory.decodeResource(getResources(),R.drawable.ball);
+        Ball = BitmapFactory.decodeResource(getResources(),R.drawable.rect);
         x = y = sensorX = sensorY = 0;
         ball_view = new Ball_view(this);
         ball_view.resume();
         setContentView(ball_view);
 
 
+    }
+
+
+
+
+
+    private void init(){
+        paint = new Paint();
+        paint.setColor(Color.BLACK);
+        paint.setStrokeWidth(10);
+        paint.setStyle(Paint.Style.STROKE);
 
     }
     @Override
