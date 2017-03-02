@@ -1,48 +1,34 @@
 package ball.game;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
-import android.graphics.Color;
+import android.util.AttributeSet;
 import android.view.*;
-import ball.game.Ball;
 
-public class Ball_view extends View {
+public class Ball_view extends SurfaceView {
 
-
-    Ball pallo = new Ball(100, 100, Color.CYAN);
+    SurfaceHolder ourHolder;
+    Bitmap Ball;
 
     public Ball_view(Context context) {
         super(context);
+
+    }
+
+    public Ball_view(Context context, AttributeSet attributes )
+    {
+        super( context, attributes ) ;
     }
 
     @Override
     public void onDraw(Canvas canvas) {
 
-
-      pallo.draw(canvas);
-
-    /* Paint filling_paint = new Paint();
-        filling_paint.setStyle(Paint.Style.FILL);
-        filling_paint.setColor(pallo.ball_color);
-
-        canvas.drawCircle(pallo.ball_center_point_x,
-                pallo.ball_center_point_y, 64, filling_paint);
-
-        Paint outline_paint = new Paint();
-        outline_paint.setStyle(Paint.Style.STROKE);
-        // Default color for a Paint is black.
-
-        canvas.drawCircle(pallo.ball_center_point_x,
-                pallo.ball_center_point_y, 64, outline_paint);
-
-        canvas.drawText("(" + pallo.ball_center_point_x +
-                        ", " + pallo.ball_center_point_y + ")",
-                20, 20, outline_paint);
-        */
+      super.onDraw(canvas);
+      Ball = BitmapFactory.decodeResource(getResources(),R.drawable.ball);
 
     }
 
 }
-
-
 
